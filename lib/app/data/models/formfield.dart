@@ -9,9 +9,9 @@ class DynamicFormField {
 
   DynamicFormField.fromJson(Map<String, dynamic> json) {
     labelName = json['labelName'];
-    value = json['value'];
     fieldType = json['fieldType'];
     selectedValue = json['selectedValue'];
+    value = fieldType == 'Date' ? DateTime.parse(json['value']) : json['value'];
   }
 
   Map<String, dynamic> toJson() {

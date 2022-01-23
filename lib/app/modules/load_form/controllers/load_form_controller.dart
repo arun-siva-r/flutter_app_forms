@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_app_forms/app/data/models/formfield.dart';
 import 'package:flutter_app_forms/app/data/util/storage_manager.dart';
 import 'package:get/get.dart';
@@ -15,7 +18,18 @@ class LoadFormController extends GetxController {
   }
 
   Future<List<DynamicFormField>?> loadData() async {
-    formFields = await StorageManager.readForm();
+    try {
+      String jsonContentEnglish =
+          await rootBundle.loadString('jsonData/form.json');
+      dynamic decodedString = json.decode(jsonContentEnglish);
+      formFields = decodedString
+          .map<DynamicFormField>(
+              (dynamic json) => DynamicFormField.fromJson(json))
+          .toList();
+    } catch (_) {
+      formFields = await StorageManager.readForm();
+    }
+
     return formFields;
   }
 

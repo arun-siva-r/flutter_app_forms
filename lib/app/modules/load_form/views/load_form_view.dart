@@ -195,7 +195,7 @@ class LoadFormView extends GetView<LoadFormController> {
                               },
                               items: currentItem.value
                                   .map<DropdownMenuItem<String>>(
-                                      (String value) {
+                                      (dynamic value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
                                   child: Text(value),
@@ -204,20 +204,29 @@ class LoadFormView extends GetView<LoadFormController> {
                             );
                           } else if (currentItem.fieldType == 'Date') {
                             return InputDatePickerFormField(
-                              initialDate: currentItem.value,
+                              initialDate: currentItem.value is String
+                                  ? DateTime.tryParse(currentItem.value)
+                                  : currentItem.value,
                               fieldLabelText: currentItem.labelName,
                               firstDate: DateTime(1900),
                               lastDate: DateTime(2100),
                               onDateSaved: (DateTime? date) {
                                 final int index =
                                     controller.formFields!.indexOf(currentItem);
-                                currentItem = currentItem.copyWith(value: date);
+                                currentItem = currentItem.copyWith(
+                                    value:
+                                        DateFormat('yyyy-MM-dd').format(date!));
                                 controller.formFields!.removeAt(index);
                                 controller.formFields!
                                     .insert(index, currentItem);
                               },
                             );
                           } else if (currentItem.fieldType == 'Time') {
+                            DateFormat format = DateFormat.jm();
+                            TimeOfDay time = currentItem.value is String
+                                ? TimeOfDay.fromDateTime(
+                                    format.parse(currentItem.value!))
+                                : currentItem.value;
                             return TextFormField(
                               autovalidateMode: AutovalidateMode.always,
                               validator: (String? value) {
@@ -226,18 +235,16 @@ class LoadFormView extends GetView<LoadFormController> {
                                 }
                               },
                               onSaved: (String? value) {
-                                DateFormat format = DateFormat.jm();
-                                TimeOfDay time = TimeOfDay.fromDateTime(
-                                    format.parse(value!));
                                 final int index =
                                     controller.formFields!.indexOf(currentItem);
-                                currentItem = currentItem.copyWith(value: time);
+                                currentItem =
+                                    currentItem.copyWith(value: value);
                                 controller.formFields!.removeAt(index);
                                 controller.formFields!
                                     .insert(index, currentItem);
                               },
                               controller: TextEditingController(
-                                  text: currentItem.value.format(context)),
+                                  text: time.format(context)),
                               keyboardType: TextInputType.datetime,
                               decoration: InputDecoration(
                                   labelText: currentItem.labelName),
@@ -257,7 +264,6 @@ class LoadFormView extends GetView<LoadFormController> {
                                       color: Colors.black, fontSize: 14),
                                 ),
                                 CupertinoSwitch(
-                                    activeColor: Color(0XFFF59297),
                                     value: currentItem.value,
                                     onChanged: (bool value) {
                                       final int index = controller.formFields!
@@ -343,7 +349,12 @@ class LoadFormView extends GetView<LoadFormController> {
                         });
                   }
 
-                  return CircularProgressIndicator();
+                  return Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    alignment: Alignment.center,
+                    child: CircularProgressIndicator(),
+                  );
                 },
               ),
             ),
