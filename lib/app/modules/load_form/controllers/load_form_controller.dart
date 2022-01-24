@@ -18,16 +18,18 @@ class LoadFormController extends GetxController {
   }
 
   Future<List<DynamicFormField>?> loadData() async {
-    try {
-      String jsonContentEnglish =
-          await rootBundle.loadString('jsonData/form.json');
-      dynamic decodedString = json.decode(jsonContentEnglish);
-      formFields = decodedString
-          .map<DynamicFormField>(
-              (dynamic json) => DynamicFormField.fromJson(json))
-          .toList();
-    } catch (_) {
-      formFields = await StorageManager.readForm();
+    formFields = await StorageManager.readForm();
+
+    if (formFields == null || formFields!.isEmpty) {
+      try {
+        String jsonContentEnglish =
+            await rootBundle.loadString('jsonData/form.json');
+        dynamic decodedString = json.decode(jsonContentEnglish);
+        formFields = decodedString
+            .map<DynamicFormField>(
+                (dynamic json) => DynamicFormField.fromJson(json))
+            .toList();
+      } catch (_) {}
     }
 
     return formFields;

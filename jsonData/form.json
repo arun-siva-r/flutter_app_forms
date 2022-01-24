@@ -1,0 +1,80 @@
+[
+  {
+    "labelName": "First Name",
+    "value": "Arun",
+    "fieldType": "Text",
+    "selectedValue": null
+  },
+  {
+    "labelName": "Last Name",
+    "value": "Siva R",
+    "fieldType": "Text",
+    "selectedValue": null
+  },
+  {
+    "labelName": "Mobile",
+    "value": "9042366901",
+    "fieldType": "Number",
+    "selectedValue": null
+  },
+  {
+    "labelName": "Type",
+    "value": [
+      "Home",
+      " Personal"
+    ],
+    "fieldType": "DropDown",
+    "selectedValue": "Home"
+  },
+  {
+    "labelName": "Mail",
+    "value": "arunsiva.r4@gmail.com",
+    "fieldType": "Email",
+    "selectedValue": null
+  },
+  {
+    "labelName": "Type",
+    "value": [
+      "Home",
+      " Personal"
+    ],
+    "fieldType": "DropDown",
+    "selectedValue": "Home"
+  },
+  {
+    "labelName": "Birth date",
+    "value": "2022-02-05",
+    "fieldType": "Date",
+    "selectedValue": null
+  },
+  {
+    "labelName": "Time ",
+    "value": "10:51 PM",
+    "fieldType": "Time",
+    "selectedValue": null
+  },
+  {
+    "labelName": "Save To Phone",
+    "value": true,
+    "fieldType": "Switch",
+    "selectedValue": true
+  },
+  {
+    "labelName": "Favourite",
+    "value": false,
+    "fieldType": "CheckBox",
+    "selectedValue": true
+  },
+  {
+    "labelName": "Friend",
+    "value": true,
+    "fieldType": "RadioButton",
+    "selectedValue": true
+  },
+  {
+    "labelName": "Family",
+    "value": false,
+    "fieldType": "RadioButton",
+    "selectedValue": false
+  }
+]
